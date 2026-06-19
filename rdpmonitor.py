@@ -1,14 +1,3 @@
-import subprocess
-import sys
-
-# Ensure required pip packages are installed
-required_packages = ['pyTelegramBotAPI', 'requests', 'beautifulsoup4', 'flask']
-for package in required_packages:
-    try:
-        __import__(package)
-    except ImportError:
-        subprocess.check_call([sys.executable, '-m', 'pip', 'install', package])
-
 import os
 import json
 import telebot
@@ -41,7 +30,8 @@ def home():
     return "Bot is alive"
 
 def run_flask():
-    app.run(host='0.0.0.0', port=8090)
+    port = int(os.environ.get('PORT', 8090))
+    app.run(host='0.0.0.0', port=port)
 
 def keep_alive():
     t = Thread(target=run_flask)
